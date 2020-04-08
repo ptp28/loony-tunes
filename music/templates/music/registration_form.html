@@ -1,0 +1,45 @@
+{% extends 'music/base_visitor.html' %}
+{% block title %} Register {% endblock %}
+{% block register_active %}active{% endblock %}
+
+{% load static %}
+
+{% block page %}
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-12 col-md-7">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <h3>Create a New Account</h3>
+                        {% if error_message %}
+                            <p><strong>{{ error_message }}</strong></p>
+                        {% endif %}
+                        <form class="form-horizontal" role="form" action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            {% include 'music/form_template.html' %}
+                            <div class="form-group">
+                                <div class="col-sm-offset-2 col-sm-10">
+                                    <button type="submit" class="btn btn-success">Submit</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-12 col-md-5">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <center><img src="{% static 'music/images/headphones.png' %}"
+                                     style="width: 35%; align-content: center" class="img-responsive"></center>
+                        <h1><span style="font-family: 'Satisfy', cursive;"> Loony Tunes </span></h1>
+                        <p><span style="font-family: 'Satisfy', cursive;"> Loony Tunes </span> is an app that allows you
+                            to upload and store all of your music on the cloud.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

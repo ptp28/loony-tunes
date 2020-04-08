@@ -1,0 +1,33 @@
+body {
+    background: white url("images/background.png");
+}
+
+.navbar {
+    border-radius: 0;
+}
+
+.navbar-brand {
+    font-family: 'Satisfy', cursive;
+}
+
+.quote {
+    font-family: 'Satisfy', cursive;
+}
+
+.glyphicon-star {
+    font-size: 20px;
+    color: #CCCCCC;
+}
+
+.glyphicon-star.active {
+    color: #FDB230;
+}
+
+.glyphicon-heart {
+    color: slategrey;
+    font-size: 15px;
+}
+
+.glyphicon-heart.active {
+    color: #f06292;
+}

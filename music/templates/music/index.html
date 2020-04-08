@@ -1,0 +1,202 @@
+{% extends 'music/base.html' %}
+
+{% load extra_tags %}
+
+{% block title %}
+    Loony Tunes
+{% endblock %}
+
+{% block albums_active %}
+    active
+{% endblock %}
+
+{% get_mod2 0 as count %}
+
+{% block page %}
+    <div class="albums-container container-fluid">
+
+        <!-- Albums -->
+        <div class="row">
+            <div class="col-sm-12">
+                <h3>{{ user.username }}'s Albums</h3>
+            </div>
+        </div>
+
+        <div class="row">
+            {% if albums %}
+                <div class="list-group">
+                    {% for album in albums %}
+                        {% get_mod2 forloop.counter0 as count %}
+
+                        {% if not count %}
+                            <div class="list-group-item">
+                            <div class="row">
+                        {% endif %}
+
+                    <div class="col-sm-12 col-md-12 col-lg-6"
+                         style="margin:-1px 0 0 -1px; border-left: 1px solid rgba(0, 0, 0, 0.125);border-right: 1px solid rgba(0, 0, 0, 0.125);">
+                        <div class="col-sm-3">
+                            <a href="{% url 'music:detail' album.id %}">
+                                <img src="{{ album.album_logo.url }}" class="img-responsive">
+                            </a>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="row">
+                                <div class="col-xs-10">
+                                    <a href="{% url 'music:detail' album.id %}">
+                                        <h2 class="text-wrap text-break"
+                                            style="overflow-wrap: break-word; word-break: break-word">{{ album.album_title }}</h2>
+                                        <h4>{{ album.artist }}</h4>
+                                    </a>
+                                </div>
+                                <div class="col-xs-2">
+                                    <!-- Favorite Album -->
+                                    <a href="{% url 'music:favorite_album' album.id %}"
+                                       class="btn btn-default btn-md btn-favorite"
+                                       role="button">
+                                        <span class="glyphicon glyphicon-heart {% if album.is_favorite %}active{% endif %}"></span>
+                                    </a>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <!-- View Details -->
+                                    <a href="{% url 'music:detail' album.id %}"
+                                       class="btn btn-primary btn-sm"
+                                       role="button" style="width: 100%;"> View </a>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <!-- Delete Album -->
+                                    <form action="{% url 'music:album-delete' album.id %}" method="post"
+                                          style="display: inline;">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="album_id" value="{{ album.id }}"/>
+                                        <button style="width: 100%;margin-top: 10px" type="submit"
+                                                class="btn btn-default btn-sm">
+                                            <span class="glyphicon glyphicon-trash"> Delete </span>
+                                        </button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if count %}
+                        </div>
+                        </div>
+                    {% endif %}
+
+
+                        {% cycle '' '' '' '' '' '<div class="clearfix visible-lg"></div>' %}
+                    {% endfor %}
+                </div>
+                </div>
+            {% elif searcher %}
+                <div class="col-sm-12">
+                    <br>
+
+
+                    <span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp; No Matching Albums Found
+
+                </div>
+            {% else %}
+                <div class="col-sm-12">
+                    <br>
+                    <a href="{% url 'music:album-add' %}">
+                        <button type="button" class="btn btn-success">
+                            <span class="glyphicon glyphicon-plus"></span>&nbsp; Add an Album
+                        </button>
+                    </a>
+                </div>
+            {% endif %}
+    </div>
+
+    <!-- If user searches and there are songs -->
+    {% if songs %}
+        <div class="row" style="padding-top: 50px">
+            <div class="col-sm-12" style="padding-bottom: 20px">
+                <h3>{{ user.username }}'s Songs</h3>
+            </div>
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Song Title</th>
+                                <th>Artist</th>
+                                <th>Audio File</th>
+                                <th>Album</th>
+                                <th>Favorite</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for song in songs %}
+                                <tr>
+                                    <td>{{ song.song_title }}</td>
+                                    <td>{{ song.album.artist }}</td>
+                                    <td>
+                                        <a target="_blank" href="{{ song.audio_file.url }}">
+                                            <button type="button" class="btn btn-success btn-xs">
+                                                <span class="glyphicon glyphicon-play"></span>&nbsp; Play
+                                            </button>
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'music:detail' song.album.id %}">
+                                            <img src="{{ song.album.album_logo.url }}" class="img-responsive"
+                                                 style="width: 20px; float: left; margin-right: 10px;"/>
+                                        </a>
+                                        <a href="{% url 'music:detail' song.album.id %}">{{ song.album.album_title }}</a>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'music:favorite' song.id %}" class="btn-favorite"><span
+                                                class="glyphicon glyphicon-star {% if song.is_favorite %}active{% endif %}"></span></a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {% elif searcher %}
+        <div class="row" style="padding-top: 50px">
+            <div class="col-sm-12">
+                <h3>{{ user.username }}'s Songs</h3>
+            </div>
+        </div>
+            <div class="row">
+            <div class="col-sm-12">
+                <br>
+                <span class="glyphicon glyphicon-exclamation-sign"></span>&nbsp; No Matching Songs Found
+            </div>
+            </div>
+
+
+    {% endif %}
+
+
+{% endblock %}
+
+
+{#{% block page %}#}
+{##}
+{#    <h1> ALBUM LIST </h1>#}
+{#    {% if all_albums %}#}
+{#        <ul>#}
+{#            {% for album in all_albums %}#}
+{#                <li><a href="{% url 'music:detail' album.id %}"> {{ album.album_title }} </a></li>#}
+{#            {% endfor %}#}
+{#        </ul>#}
+{#    {% else %}#}
+{#        <h2> No Albums Found </h2>#}
+{#    {% endif %}#}
+{##}
+{#{% endblock %}#}

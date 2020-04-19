@@ -38,4 +38,4 @@ You can also search for music using the search feature at the top of every page.
 
 You can use this site on any device, be it a phone or a PC. It has a responsive UI which adapts to the client's screen size.
 
-<img src="media/phone_ui.png">
+<img src="media/phone_ui.gif">

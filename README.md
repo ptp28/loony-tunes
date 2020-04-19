@@ -1,4 +1,4 @@
-# What is Loony Tunes?
+# What is Loony Tunes? (https://loonytunes.herokuapp.com)
 
 Loony Tunes is an application that let's you upload, store, and play all of your music from the cloud. You can manage and listen to your music from any device, anywhere in the world.
 
@@ -39,3 +39,8 @@ You can also search for music using the search feature at the top of every page.
 You can use this site on any device, be it a phone or a PC. It has a responsive UI which adapts to the client's screen size.
 
 <img src="media/phone_ui.gif">
+
+
+## References
+
+Based on thenewboston's and Bucky Robert's [Django tutorials](https://youtu.be/qgGIqRFvFFk).
